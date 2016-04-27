@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>来赚助手</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="_HOST_/css/mui.css">
+    <style>
+        .ct{
+            background-color: #D44245;
+            height: 166px;
+            position: relative;
+        }
+        .line{
+            height: 1px;
+            background-color: #E57A7B;
+            position: relative;
+            top: 50%;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+        }
+        .circle_ct{
+            padding: 0;
+            margin: 0;
+            -webkit-box-flex: 1.0;
+            -moz-flex-grow: 1;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .circle{
+            box-sizing: content-box;
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            display: inline-block;
+            border-radius: 100%;
+            border: 3px solid #E57A7B;
+            position: relative;
+            top: -15px;
+        }
+        .circle .date{
+            position: absolute;
+            top: -36px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+        }
+        .circle_miss:after,.circle_ok:after{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -6px;
+            margin-left: -6px;
+            display: block;
+            border-radius: 100%;
+            width: 12px;
+            height: 12px;
+            background-color: #aaa;
+        }
+        .circle_ok:after{
+            background-color: #D44245;
+        }
+        .circle_today{
+            top: -40.5px;
+            width: 75px;
+            height: 75px;
+            border-width: 6px;
+            font-weight: bold;
+        }
+        .circle_today .sign_btn{
+            height: 100%;
+            color: #D44245;
+            font-size: 24px;
+            line-height: 75px;
+        }
+        .circle_today .sign_btn .mui-icon{
+            font-size: 75px;
+        }
+        .circle_today .date{
+            font-size: 16px;
+        }
+        .sign_tip{
+            font-size: 12px;
+            text-align: center;
+            color: rgba(255,255,255,.7);
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+        }
+        .sign_tip_num{
+            padding: 0 3px;
+            color: #fff;
+        }
+        .tip{
+            height: 44px;
+            line-height: 44px;
+            padding-left: 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #e6e6e6;
+            margin-bottom: 30px;
+        }
+        .tip_num{
+            color: #D44245;
+            padding: 0 3px;
+        }
+        h2{
+            color: #333;
+            font-size: 20px;
+        }
+        h2,.desc{
+            margin-left: 15px;
+        }
+        .desc{
+            padding-left: 0px;
+        }
+        .desc li{
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">签到</h1>
+    </header>
+    <div class="mui-content">
+        <div class="ct">
+            <ul class="line">
+                <li class="circle_ct">
+                    <div class="circle circle_miss">
+                        <span class="date">04.24</span>
+                    </div>
+                </li>
+                <li class="circle_ct">
+                    <div class="circle circle_ok">
+                        <span class="date">04.25</span>
+                    </div>
+                </li>
+                <li class="circle_ct">
+                    <div class="circle circle_today">
+                        <span class="date">今天</span>
+                        <div class="sign_btn">签到</div>
+                    </div>
+                </li>
+                <li class="circle_ct">
+                    <div class="circle">
+                        <span class="date">04.27</span>
+                    </div>
+                </li>
+                <li class="circle_ct">
+                    <div class="circle">
+                        <span class="date">04.28</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <p class="tip">
+            今日签到可以获得0.25元和一张抽奖券。
+        </p>
+        <h2>签到规则</h2>
+        <ul class="desc">
+            <li><p>· 首日签到可获得0.05元，每连续签到一日可多获得0.05元（不超过5日），连续签到5日以上则每日可获得0.25元。</p></li>
+            <li><p>· 签到可获得一张抽奖券</p></li>
+            <li><p>· 签到获得的金额将直接打入您的来赚账户，请注意查收。</p></li>
+        </ul>
+    </div>
+    <script src="_HOST_/js/mui.js"></script>
+    <script type="text/javascript">
+        mui('body').on('click','.sign_btn',function(){
+            this.innerHTML = '<span class="mui-icon mui-icon-checkmarkempty"></span>';
+            var tip = document.createElement('div');
+            tip.className = "sign_tip";
+            tip.innerHTML = '您已经连续签到<span class="sign_tip_num">2</span>天';
+            mui('.ct')[0].appendChild(tip);
+            mui('.tip')[0].innerHTML = '今日获得<span class="tip_num">0.10</span>元和<span class="tip_num">1</span>次抢红包机会。'
+            mui('body').off('click','.sign_btn');
+        });
+    </script>
+</body>
+
+</html>
