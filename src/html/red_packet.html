@@ -13,6 +13,9 @@
         html,body{
             height: 100%;
         }
+        body,.mui-content{
+            --webkit-overflow-scrolling: auto;
+        }
         .card_ct{
             position: absolute;
             top: 100%;
@@ -358,54 +361,53 @@
         }
         .packet_ct.hidden .packet{
             bottom: 0px;
-            background-color: rgba(230,73,70,.3);
+            background-color: rgba(230,73,70,0);
+            box-shadow: none;
         }
-        .packet:nth-child(1){
-            bottom: -44px;
-            transform: scale(1);
-            z-index: 8;
-            transition: all .5s .2s;
+        .packet_ct.hidden .packet .packet_head{
+            box-shadow: none;
         }
-        .packet:nth-child(2){
-            bottom: -36px;
-            transform: scale(.97);
-            z-index: 7;
-            transition: all .5s .4s;
-        }
-        .packet:nth-child(3){
-            bottom: -28px;
-            transform: scale(.94);
-            z-index: 6;
-            transition: all .5s .6s;
-        }
-        .packet:nth-child(4){
-            bottom: -22px;
-            transform: scale(.91);
-            z-index: 5;
-            transition: all .5s .8s;
-        }
-        .packet:nth-child(5){
-            bottom: -16px;
-            transform: scale(.88);
-            z-index: 4;
-            transition: all .5s 1.0s;
-        }
-        .packet:nth-child(6){
-            bottom: -10px;
-            transform: scale(.85);
-            z-index: 3;
-            transition: all .5s 1.2s;
-        }
-        .packet:nth-child(7){
-            bottom: -5px;
-            transform: scale(.82);
-            z-index: 2;
-            transition: all .5s 1.4s;
+        .packet_ct.hidden .packet .packet_btn{
+            border-color: #E64946;
         }
         .packet:nth-child(8){
+            bottom: -44px;
+            transform: scale(1);
+            transition: all .5s .2s;
+        }
+        .packet:nth-child(7){
+            bottom: -36px;
+            transform: scale(.97);
+            transition: all .5s .4s;
+        }
+        .packet:nth-child(6){
+            bottom: -28px;
+            transform: scale(.94);
+            transition: all .5s .6s;
+        }
+        .packet:nth-child(5){
+            bottom: -22px;
+            transform: scale(.91);
+            transition: all .5s .8s;
+        }
+        .packet:nth-child(4){
+            bottom: -16px;
+            transform: scale(.88);
+            transition: all .5s 1.0s;
+        }
+        .packet:nth-child(3){
+            bottom: -10px;
+            transform: scale(.85);
+            transition: all .5s 1.2s;
+        }
+        .packet:nth-child(2){
+            bottom: -5px;
+            transform: scale(.82);
+            transition: all .5s 1.4s;
+        }
+        .packet:nth-child(1){
             bottom: 0px;
             transform: scale(.79);
-            z-index: 1;
             transition: all .5s 1.6s;
             box-shadow: 0 -1px 10px rgba(0,0,0,.03);
         }
@@ -416,13 +418,12 @@
             position: absolute;
             top: -70px;
             width: 100%;
+            transition: all 2s;
         }
         .packet_btn{
             width: 47px;
             height: 47px;
             background: -webkit-linear-gradient(#FCF9A0,#F7DF35);
-            background: -o-linear-gradient(#FCF9A0,#F7DF35);
-            background: -moz-linear-gradient(#FCF9A0,#F7DF35);
             background: linear-gradient(#FCF9A0,#F7DF35);
             position: absolute;
             border-radius: 100%;
@@ -430,6 +431,7 @@
             margin-left: -27.5px;
             border: 4px solid #FB9B28;
             top: 55px;
+            transition: all 1.6s .5s;
         }
         @keyframes arrow_down{
             0%   {opacity: 1;margin-top: 2px;}
@@ -600,93 +602,109 @@
     </div>
     <script src="_HOST_/js/mui.js"></script>
     <script type="text/javascript">
-    
-
-    // mui("body").on("swipe",".packet",function(){
-    //     alert(11);
-    // });
-        var r_minute = 1;
-        goby("17:00");
         addClass(mui('.card'),'init');
-        function goby(timing){
-            var _hmArr = timing.split(':');
-            var _h = _hmArr[0];
-            var _m = _hmArr[1];
-            if(getTime('h') === _h && +getTime('m') >= +_m){
-                countdown();
-                renderTip(_h,_m);
-                r_minute = +_m + r_minute;
-                addClass(mui('.tip')[0],'collapse');
-            }else{
-                renderTip(_h,_m);
-                setTimeout(function(){
-                    goby(timing);
-                },1000*48);
-            }
-        }
-        function renderTip(_h,_m){
-            mui('.time_now')[0].innerText = getTime('hm');
-            var _hour = (new Date()).getHours();
-            var _minute = (new Date()).getMinutes();
-            var tip_unit = mui('.tip_unit')[0].innerText;
-            var tip_time = mui('.tip_time')[0].innerText;
-            if(tip_unit === "小时"){
-                var new_tip_time = (_h-_hour+r_minute/60).toFixed(1);
-                if(new_tip_time < 0){
-                    new_tip_time = (+new_tip_time + 24).toFixed(1);
+        
+        (function(){
+            var delay = 10;                                 //倒计时时长
+            var time2packet = -60;                          //抢红包时长
+            var time2send = "10:30";                        //发红包时分string
+            var ts_hm = time2send.split(':');               //发红包时分array
+            var time2ts = function(){                       //发红包时间
+                var time = new Date;
+                time.setHours(ts_hm[0]);
+                time.setMinutes(ts_hm[1]);
+                time.setSeconds(0);
+                return time;
+            }();
+            var time2cd = function(){                       //倒计时时间
+                var time = new Date;
+                time.setHours(ts_hm[0]);
+                time.setMinutes(ts_hm[1]-delay);
+                time.setSeconds(0);
+                return time;
+            }();
+            var time2countdown = getTime('hm',time2cd);     //倒计时时分string
+            var tc_hm = time2countdown.split(':');          //倒计时时分array
+
+            goby();
+
+            // 判断是否进入倒计时
+            function goby(){
+                var time_left = Math.floor((time2ts.getTime() - (new Date()).getTime())/(1000*60));
+                if(time_left >= time2packet && time_left < delay){
+                    countdown();
+                    addClass(mui('.tip')[0],'collapse');
+                }else{
+                    setTimeout(function(){
+                        goby();
+                    },1000*17);
                 }
-            }
-            if(!(_h-_hour)){
-                new_tip_time = Math.max(_m-_minute+r_minute,0);
-                mui('.tip_unit')[0].innerText = "分钟";
-            }
-            mui('.tip_time')[0].innerText = new_tip_time;
-        }
-        function countdown(){
-            var _m = r_minute-1 - (new Date()).getMinutes();
-            var _s = 59 - (new Date()).getSeconds();
-            if((+_m === 0 && +_s === 0) || +_m < 0){
-                addClass(mui(".time_now,.review_ct"),"fade_out");
+                renderTip(time_left);
+            };
+            //倒计时
+            function countdown(){
+                var _seconds = Math.ceil((time2ts.getTime() - (new Date()).getTime())/1000);
+                var _m = Math.floor(_seconds/60);
+                var _s = _seconds%60;
+                if(_seconds <= 0){
+                    addClass(mui(".time_now,.review_ct"),"fade_out");
+                    setTimeout(function(){
+                        mui('.packet_ct')[0].className = 'packet_ct';
+                    },800);
+                    return false;
+                }
+                mui('.time_now')[0].innerText = toDouble(_m) + ":" + toDouble(_s);
                 setTimeout(function(){
-                    mui('.packet_ct')[0].className = 'packet_ct';
-                },800);
-                return false;
+                    countdown();
+                },1000);
             }
-            _m = toDouble(_m);
-            _s = toDouble(_s);
-            mui('.time_now')[0].innerText = _m + ":" + _s;
-            setTimeout(function(){
-                countdown(r_minute);
-            },1000);
-        }
-        function getTime(type){
-            var now = new Date(),time;
-            switch(type){
-                case "h":
-                    time = toDouble(now.getHours());
-                    break;
-                case "m":
-                    time = toDouble(now.getMinutes());
-                    break;
-                case "s":
-                    time = toDouble(now.getSeconds());
-                    break;
-                case "hm":
-                    time = toDouble(now.getHours()) + ":" + toDouble(now.getMinutes());
-                    break;
-                case "ms":
-                    time = toDouble(now.getMinutes()) + ":" + toDouble(now.getSeconds());
-                    break;
-                default:
-                    time = toDouble(now.getHours()) + ":" + toDouble(now.getMinutes()) + ":" + toDouble(now.getSeconds());
+            // 当前时间更新及提示更新
+            function renderTip(time_left){
+                mui('.time_now')[0].innerText = getTime('hm');
+                time_left < 0 && (time_left += 24*60);
+                if(time_left > 59){
+                    time_left = (time_left/60).toFixed(1);
+                    mui('.tip_unit')[0].innerText = "小时";
+                }else{
+                    mui('.tip_unit')[0].innerText = "分钟";
+                }
+                mui('.tip_time')[0].innerText = time_left;
             }
-            return time;
-        }
-        function toDouble(str){
-            str = "" +str;
-            str.length !== 2 && (str = "0" + str);
-            return str;
-        };
+
+            // 个位数的时间左边填补'0'
+            function toDouble(str){
+                str = "" +str;
+                str.length !== 2 && (str = "0" + str);
+                return str;
+            };
+            // 获取指定时间的时分秒
+            function getTime(type,_date){
+                var now = _date || new Date(),time;
+                switch(type){
+                    case "h":
+                        time = toDouble(now.getHours());
+                        break;
+                    case "m":
+                        time = toDouble(now.getMinutes());
+                        break;
+                    case "s":
+                        time = toDouble(now.getSeconds());
+                        break;
+                    default:
+                        time = toDouble(now.getHours()) + ":" + toDouble(now.getMinutes());
+                }
+                return time;
+            }
+
+            mui("body").on("swipe",".packet",function(e){
+                var dir = e.detail.direction
+                console.log(dir);
+                if(dir === "up"){
+                    mui('.packets')[0].insertBefore(mui('.packets .packet')[0],mui('.packets .packet:last-child')[0]);
+                }
+            });
+        })();
+        // 添加class
         function addClass(ele,className){
             if(ele.length){
                 for(var i = 0; i < ele.length; i++){

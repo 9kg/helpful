@@ -5,14 +5,28 @@
     <title>红包记录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no,email=no" name="format-detection">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="_HOST_/css/mui.css">
     <style>
+        html,body,.mui-content,.mui-table-view{
+            height: 100%;
+        }
         body,.mui-content{
             background-color: #fff;
         }
+        .mui-content{
+            padding-bottom: 72px;
+        }
+        .mui-content > .mui-table-view:first-child{
+            margin-top: 0;
+        }
         .mui-table-view-cell{
             color: #808080;
+            height: 10%;
+        }
+        .mui-table-view-cell:last-child:before, .mui-table-view-cell:last-child:after{
+            height: 1px;
         }
         .mui-table-view-cell:after{
             left: 0;
@@ -25,58 +39,212 @@
             background: none;
             color: #8f8f94;
         }
+        .used_label{
+            background-color: #666;
+            color: #fff;
+            padding: 3px 5px;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        .used.mui-table-view-cell,.used .add_num{
+            color: #b2b2b2;
+        }
+        .item_content{
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        .mui-bar-footer{
+            height: 72px;
+            -webkit-box-shadow: none;
+                    box-shadow: none;
+            background-color: #fff;
+            text-align: center;
+            line-height: 72px;
+            color: #666;
+        }
+        .page_btn{
+            background-color: #999;
+            color: #fff;
+            height: 36px;
+            width: 36px;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 36px;
+            border-radius: 100%;
+            margin: 0 8px;
+        }
+        .page_btn:active,.mui-bar .mui-btn-link:active, .mui-bar .mui-btn-link.mui-active{
+            color: #fff;
+        }
+        .page_btn_disabled{
+            background-color: #ccc;
+        }
+        .mui-bar-footer .mui-icon{
+            position: static;
+            font-weight: bold;
+            padding: 0;
+        }
+        .mui-bar .mui-icon:active{
+            opacity: 1;
+        }
+        .mui-bar .mui-btn .mui-icon{
+            font-size: 16px;
+            font-weight: bold;
+            top: 0;
+        }
+        .filter_items{
+            position: absolute;
+            background-color: #D44245;
+            color: #fff;
+            top: 44px;
+            right: 5px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .filter_item{
+            padding: 10px;
+            padding-right: 20px;
+            position: relative;
+            border-top: 1px solid rgba(255,255,255,.2);
+        }
+        .filter_item:before{
+            content: '';
+            position: absolute;
+            border-radius: 100%;
+            width: 6px;
+            height: 6px;
+            background-color: #fff;
+            top: 50%;
+            margin-top: -3px;
+            right: 10px;
+        }
+        .filter_item_active:after{
+            content: '';
+            position: absolute;
+            border-radius: 100%;
+            width: 2px;
+            height: 2px;
+            background-color: #D44245;
+            top: 50%;
+            margin-top: -1px;
+            right: 12px;
+        }
     </style>
 </head>
 
 <body>
     <header class="header mui-bar mui-bar-nav">
         <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">红包记录</h1>
-        <a id='done' class="mui-btn mui-btn-link mui-pull-right mui-btn-blue">最近一月</a>
+        <h1 class="mui-title">次数记录</h1>
+        <a class="mui-btn mui-btn-link mui-pull-right mui-btn-blue">
+            <span class="filter_type">全部</span>
+            <span class="mui-icon mui-icon-arrowdown">
+        </a>
     </header>
     <div class="mui-content">
         <ul class="mui-table-view">
             <li class="mui-table-view-cell">
-                抢到红包
-                <span class="add_num">0.10元</span>
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
                 <span class="mui-badge">
                     2011-12-12 12:12
                 </span>
             </li>
             <li class="mui-table-view-cell">
-                抢到红包
-                <span class="add_num">1.00元</span>
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
                 <span class="mui-badge">
                     2011-12-12 12:12
                 </span>
             </li>
             <li class="mui-table-view-cell">
-                抢到红包
-                <span class="add_num">0.10元</span>
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
                 <span class="mui-badge">
                     2011-12-12 12:12
                 </span>
             </li>
             <li class="mui-table-view-cell">
-                抢到红包
-                <span class="add_num">小米手环</span>
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
                 <span class="mui-badge">
                     2011-12-12 12:12
                 </span>
             </li>
             <li class="mui-table-view-cell">
-                抢到红包
-                <span class="add_num">0.10元</span>
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
+                <span class="mui-badge">
+                    2011-12-12 12:12
+                </span>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
+                <span class="mui-badge">
+                    2011-12-12 12:12
+                </span>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="item_content">
+                    抢到红包
+                    <span class="add_num">小米手环</span>
+                </div>
+                <span class="mui-badge">
+                    2011-12-12 12:12
+                </span>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="item_content">
+                   抢到红包
+                    <span class="add_num">0.10元</span>
+                </div>
                 <span class="mui-badge">
                     2011-12-12 12:12
                 </span>
             </li>
         </ul>
     </div>
+    <footer class="mui-bar mui-bar-footer">
+        <a class="page_btn"><span class="mui-icon mui-icon-arrowleft"></span></a>
+        第5/5页
+        <a class="page_btn page_btn_disabled"><span class="mui-icon mui-icon-arrowright"></span></a>
+    </footer>
+    <ul class="filter_items mui-hidden">
+        <li class="filter_item">今天</li>
+        <li class="filter_item">最近一周</li>
+        <li class="filter_item">最近一月</li>
+        <li class="filter_item filter_item_active">全部</li>
+    </ul>
     <script src="_HOST_/js/mui.js"></script>
     <script type="text/javascript">
-
+        mui('body').on('click','.header .mui-btn.mui-pull-right',function(){
+            mui(".filter_items")[0].className === "filter_items mui-hidden" ?
+            mui(".filter_items")[0].className = "filter_items" :
+            mui(".filter_items")[0].className = "filter_items mui-hidden";
+        }).on('click','.filter_item',function(){
+            mui(".filter_item_active")[0].className = "filter_item";
+            this.className = "filter_item filter_item_active";
+            mui('.filter_type')[0].innerText = this.innerText;
+            mui(".filter_items")[0].className = "filter_items mui-hidden";
+        });
     </script>
 </body>
 
 </html>
+

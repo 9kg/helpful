@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     min_png = require('imagemin-pngquant');
 var base = {
     host_str: '_HOST_',
-    host_url: 'http://192.168.1.115:5211',
+    host_url: 'http://192.168.1.163:5211',
     host_url_build: 'http://www.bramble.wang/helpful',
     src: './src',
     dev: './dev',
